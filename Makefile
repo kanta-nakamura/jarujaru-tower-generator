@@ -27,7 +27,7 @@ requirements: test_environment
 
 ## Make Dataset
 data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/jarujaru_tower.csv data/processed/jarujaru_tower_title.csv
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/jarujaru_tower.csv data/processed/jarujaru_tower_title.txt
 
 ## Delete all compiled Python files
 clean:
