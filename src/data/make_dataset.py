@@ -10,7 +10,7 @@ from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
 vocab_file = 'vocab.pkl'
-corpus_file = 'corpus.pkl'
+corpus_file = 'corpus.npy'
 dataset_dir = Path(__file__).resolve().parents[2] / 'data/processed'
 
 @click.command()
