@@ -18,9 +18,14 @@ def main(input_filepath, output_filepath):
     logger.info('making final data set from raw data')
 
     df = pd.read_csv(input_filepath)
+
+    df.drop_duplicates(inplace=True)  # 重複削除
+    df = df[df['title'].str.contains('ジャルジャルのネタのタネ')]  # 稀に存在すネタ以外の動画を削除
+
+    # タイトルの抽出
     df['title'] = df['title'].str.replace('ジャルジャルのネタのタネ', '')
     df['title'] = df['title'].str.replace('【JARUJARUTOWER】', '')
-    df['title'] = df['title'].str[1:-1]  # 前後の『』を削除
+    df['title'] = df['title'].str[1:-1]
 
     mecab_wakati = MeCab.Tagger('-Owakati')
     df['title'] = df['title'].apply(lambda x: mecab_wakati.parse(x))
