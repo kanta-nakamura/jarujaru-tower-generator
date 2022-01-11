@@ -11,7 +11,7 @@ from dotenv import find_dotenv, load_dotenv
 
 vocab_file = 'vocab.pkl'
 corpus_file = 'corpus.pkl'
-dataset_dir = Path('data/processed')
+dataset_dir = Path(__file__).resolve().parents[2] / 'data/processed'
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
