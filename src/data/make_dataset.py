@@ -30,9 +30,9 @@ def main(input_filepath, output_filepath):
     mecab_wakati = MeCab.Tagger('-Owakati')
     df['title'] = df['title'].apply(lambda x: mecab_wakati.parse(x))
     df['title'] = df['title'].str.replace('\n', '<eos>')
-    text = ' '.join(df['title'].values)
+    words = ' '.join(df['title'].values)
 
-    print(text)
+    print(words)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
