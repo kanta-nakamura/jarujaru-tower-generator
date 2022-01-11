@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
+import os
 import click
 import MeCab
+import pickle
 import logging
+import numpy as np
 import pandas as pd
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
+vocab_file = 'vocab.pkl'
+corpus_file = 'corpus.pkl'
+dataset_dir = Path('data/processed')
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
@@ -30,20 +36,23 @@ def main(input_filepath, output_filepath):
     mecab_wakati = MeCab.Tagger('-Owakati')
     df['title'] = df['title'].apply(lambda x: mecab_wakati.parse(x))
     df['title'] = df['title'].str.replace('\n', '<eos>')
-    words = ' '.join(df['title'].values)
-
-    print(words)
+    words = ' '.join(df['title'].values).split()
 
     id_to_word = {}
     word_to_id = {}
-    for word in words.split():
+    for word in words:
         if word not in word_to_id:
             tmp_id = len(word_to_id)
             word_to_id[word] = tmp_id
             id_to_word[tmp_id] = word
+
+    corpus = np.array([word_to_id[w] for w in words])
+    corpus_path = dataset_dir / corpus_file
+    vocab_path = dataset_dir / vocab_file
     
-    print(word_to_id)
-    print(id_to_word)
+    np.save(corpus_path, corpus)
+    with open(vocab_path, 'wb') as f:
+        pickle.dump((word_to_id, id_to_word), f)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
