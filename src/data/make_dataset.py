@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import click
+import MeCab
 import logging
 import pandas as pd
 from pathlib import Path
@@ -21,7 +22,12 @@ def main(input_filepath, output_filepath):
     df['title'] = df['title'].str.replace('【JARUJARUTOWER】', '')
     df['title'] = df['title'].str[1:-1]  # 前後の『』を削除
 
-    print(df['title'].values)
+    mecab_wakati = MeCab.Tagger('-Owakati')
+    df['title'] = df['title'].apply(lambda x: mecab_wakati.parse(x))
+    df['title'] = df['title'].str.replace('\n', '<eos>')
+    text = ' '.join(df['title'].values)
+
+    print(text)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
