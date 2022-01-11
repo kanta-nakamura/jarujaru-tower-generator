@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import click
 import logging
+import pandas as pd
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
@@ -15,6 +16,12 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+    df = pd.read_csv(input_filepath)
+    df['title'] = df['title'].str.replace('ジャルジャルのネタのタネ', '')
+    df['title'] = df['title'].str.replace('【JARUJARUTOWER】', '')
+    df['title'] = df['title'].str[1:-1]  # 前後の『』を削除
+
+    print(df['title'].values)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
