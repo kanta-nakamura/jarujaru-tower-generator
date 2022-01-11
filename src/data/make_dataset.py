@@ -34,6 +34,17 @@ def main(input_filepath, output_filepath):
 
     print(words)
 
+    id_to_word = {}
+    word_to_id = {}
+    for word in words.split():
+        if word not in word_to_id:
+            tmp_id = len(word_to_id)
+            word_to_id[word] = tmp_id
+            id_to_word[tmp_id] = word
+    
+    print(word_to_id)
+    print(id_to_word)
+
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
