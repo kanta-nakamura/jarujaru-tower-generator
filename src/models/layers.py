@@ -4,6 +4,8 @@ import numpy as np
 import collections
 from src.common.functions import softmax, cross_entropy_error
 
+GPU = False
+
 class MatMul:
     def __init__(self, W):
         self.params = [W]
