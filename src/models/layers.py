@@ -73,7 +73,7 @@ class Embedding:
         return None
 
 
-class EmbeddindDot:
+class EmbeddingDot:
     def __init__(self, W):
         self.embed = Embedding(W)
         self.params = self.embed.params
