@@ -1,6 +1,7 @@
 import sys
 sys.path.append('..')
 import numpy as np
+import collections
 from src.common.functions import softmax, cross_entropy_error
 
 class MatMul:
