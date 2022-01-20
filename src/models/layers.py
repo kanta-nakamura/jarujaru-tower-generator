@@ -385,7 +385,7 @@ class TimeRNN:
         dh = 0
         grads = [0, 0, 0]
         for t in reversed(range(T)):
-            layer = self.lalyers[t]
+            layer = self.layers[t]
             dx, dh = layer.backward(dhs[:, t, :] + dh)
             dxs[:, t, :] = dx
             
