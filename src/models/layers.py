@@ -473,3 +473,25 @@ class TimeLSTM:
         self.h, self.c = None, None
         self.dh = None
         self.stateful = stateful
+        
+    def forward(self, xs):
+        Wx, Wh, b = self.params
+        N, T, D = xs.shape
+        H = Wh.shape[0]
+        
+        self.layers = []
+        hs = np.empty((N, T, H), dtype='f')
+        
+        if not self.stateful or self.h is None:
+            self.h = np.zeros((N, H), dtype='f')
+        if not self.stateful or self.c is None:
+            self.c = np.zeros((N, H), dtype='f')
+            
+        for t in range(T):
+            layer = LSTM(*self.params)
+            self.h, self.c = layer.forward(xs[:, t, :], self.h, self.c)
+            hs[:, t, :] = self.h
+            
+            self.layers.append(layer)
+            
+        return hs
