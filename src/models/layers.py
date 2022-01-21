@@ -463,4 +463,13 @@ class LSTM:
 
         return dx, dh_prev, dc_prev
         
+
+class TimeLSTM:
+    def __init__(self, Wx, Wh, b, stateful=False):
+        self.params = [Wx, Wh, b]
+        self.grads = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]
+        self.layers = None
         
+        self.h, self.c = None, None
+        self.dh = None
+        self.stateful = stateful
