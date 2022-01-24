@@ -427,8 +427,8 @@ class LSTM:
         
         self.cache = (x, h_prev, c_prev, i, f, g, o, c_next)
         return h_next, c_next
-    
-     def backward(self, dh_next, dc_next):
+
+    def backward(self, dh_next, dc_next):
         Wx, Wh, b = self.params
         x, h_prev, c_prev, i, f, g, o, c_next = self.cache
 
